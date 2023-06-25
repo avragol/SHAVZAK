@@ -1,0 +1,11 @@
+{
+    "validatorOption": "joi",
+    "dbOption": "mongo",
+    "hashOption": "bycript",
+    "tokenOption": "jwt",
+    "logger": "morgan",
+    "dbConfig": {
+        "url": "mongodb://127.0.0.1:27017/node_project"
+    },
+    "jwt": "dvrh347980w9jfmcsl;2-=sf"
+}
