@@ -19,7 +19,11 @@ router.post('/login', async (req, res) => {
         await userValidationService.loginUserValidation(req.body);
         let { email, password } = req.body;
         let dataFromDB = await userAccessData.getUserByEmail(email);
-        res.json({ msg: "done!", dataFromDB });
+        if (dataFromDB && dataFromDB.password === password) {
+            res.json({ msg: "done!", dataFromDB });
+        } else {
+            handleError(res, "Invaild email or password", 400)
+        }
     } catch (err) {
         handleError(res, err.message, 404)
     }
@@ -66,22 +70,11 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        await userValidationService.userIdValidation(id);
-        await userAccessData.updateBizUser(id);
-        res.json({ msg: "done" });
-    } catch (err) {
-        handleError(res, err.message, 400);
-    }
-});
-
 router.delete('/:id', async (req, res) => {
     try {
         await userValidationService.userIdValidation(req.params.id);
         const dataFromDb = await userAccessData.deleteUser(req.params.id);
-        res.json({ msg: `user - ${dataFromDb.name.first} ${dataFromDb.name.last} deleted` })
+        res.json({ msg: `user - ${dataFromDb.name} deleted` })
     } catch (err) {
         handleError(res, err.message, 400);
     }
