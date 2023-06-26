@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('./utils/loggers/loggerService');
 const cors = require('cors');
 const handleError = require('./utils/handleError');
-const router = require('./routes/router')
+const router = require('./routes/router');
 const app = express();
 
 /* SETTINGS */
