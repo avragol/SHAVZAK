@@ -1,0 +1,182 @@
+[
+    {
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role2"
+        ]
+    },
+    {
+        "name": "Jane Smith",
+        "email": "janesmith@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role3"
+        ]
+    },
+    {
+        "name": "Alice Johnson",
+        "email": "alicejohnson@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role2"
+        ]
+    },
+    {
+        "name": "Bob Williams",
+        "email": "bobwilliams@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1"
+        ]
+    },
+    {
+        "name": "Sarah Davis",
+        "email": "sarahdavis@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role2",
+            "role3"
+        ]
+    },
+    {
+        "name": "Michael Brown",
+        "email": "michaelbrown@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role3"
+        ]
+    },
+    {
+        "name": "Emily Johnson",
+        "email": "emilyjohnson@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": []
+    },
+    {
+        "name": "Daniel Wilson",
+        "email": "danielwilson@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role2",
+            "role3"
+        ]
+    },
+    {
+        "name": "Olivia Taylor",
+        "email": "oliviataylor@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role3"
+        ]
+    },
+    {
+        "name": "Jacob Anderson",
+        "email": "jacobanderson@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": []
+    },
+    {
+        "name": "Mia Thomas",
+        "email": "miathomas@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1"
+        ]
+    },
+    {
+        "name": "David Garcia",
+        "email": "davidgarcia@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role2",
+            "role3"
+        ]
+    },
+    {
+        "name": "Sophia Moore",
+        "email": "sophiamoore@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": []
+    },
+    {
+        "name": "Matthew Lee",
+        "email": "matthewlee@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role2"
+        ]
+    },
+    {
+        "name": "Isabella Hernandez",
+        "email": "isabellahernandez@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role3"
+        ]
+    },
+    {
+        "name": "James Clark",
+        "email": "jamesclark@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": []
+    },
+    {
+        "name": "Samantha Walker",
+        "email": "samanthawalker@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role1",
+            "role2",
+            "role3"
+        ]
+    },
+    {
+        "name": "Joseph Rodriguez",
+        "email": "josephrodriguez@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": []
+    },
+    {
+        "name": "Ava Martinez",
+        "email": "avamartinez@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role2"
+        ]
+    },
+    {
+        "name": "Christopher Perez",
+        "email": "christopherperez@example.com",
+        "password": "Aa123456!",
+        "groupId": "64915e41a434e36580aea54b",
+        "roles": [
+            "role3"
+        ]
+    }
+]
