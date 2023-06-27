@@ -21,8 +21,8 @@ const updateUser = (id, userToUpdate) => {
     return User.findByIdAndUpdate(id, userToUpdate, { new: true }).select(["-password"]);
 }
 
-const updateBizUser = (id) => {
-    return User.findByIdAndUpdate(id, [{ "$set": { "isBiz": { "$not": "$isBiz" } } }], { new: true }).select(["-password"]);
+const updateLastTask = (id, lastTask) => {
+    return User.findByIdAndUpdate(id, { $push: { endTaskDates: lastTask } }, { new: true }).select(["-password"]);
 };
 
 const deleteUser = (id) => {
@@ -35,6 +35,6 @@ module.exports = {
     getAllUsers,
     getUserByEmail,
     updateUser,
-    updateBizUser,
+    updateLastTask,
     deleteUser,
 }

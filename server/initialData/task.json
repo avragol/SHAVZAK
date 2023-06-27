@@ -1,0 +1,18 @@
+{
+    "name": "Task Name",
+    "groupId": "64915e41a434e36580aea54b",
+    "requierdRoles": [
+        {
+            "title": "role1",
+            "amount": 5
+        },
+        {
+            "title": "role2",
+            "amount": 3
+        }
+    ],
+    "rangeTime": [
+        "2023-06-28T10:00:00Z",
+        "2023-06-30T18:00:00Z"
+    ]
+}
