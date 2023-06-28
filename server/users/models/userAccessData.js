@@ -42,11 +42,11 @@ const updateUser = (id, userToUpdate) => {
     }
 };
 
-const updateBizUser = (id) => {
+const updateLastTask = (id, lastTask) => {
     switch (dbOption) {
         case "mongo":
         default:
-            return usersServiceMongo.updateBizUser(id);
+            return usersServiceMongo.updateLastTask(id, lastTask);
     }
 };
 
@@ -64,6 +64,6 @@ module.exports = {
     getUserById,
     getAllUsers,
     updateUser,
-    updateBizUser,
+    updateLastTask,
     deleteUser
 };
