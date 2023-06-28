@@ -1,7 +1,7 @@
-const joiRegisterValidation = require('./joi/registerValidation');
-const joiloginValidation = require('./joi/loginValidation');
+const joiRegisterValidation = require('./joi/user/registerValidation');
+const joiloginValidation = require('./joi/user/loginValidation');
 const joiuserIdValidation = require('./joi/idValidation');
-const joiUpdateUserValidation = require('./joi/updateUserValidation');
+const joiUpdateUserValidation = require('./joi/user/updateUserValidation');
 const config = require('config');
 
 const validatorOption = config.get("validatorOption");

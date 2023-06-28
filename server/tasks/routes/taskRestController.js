@@ -45,11 +45,12 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         await taskValidationService.taskIdValidation(req.params.id);
-        await taskValidationService.updateUserValidation(req.body);
-        const dataFromDB = await taskAccessData.updateUser(
+        await taskValidationService.updateTaskValidation(req.body);
+        const dataFromDB = await taskAccessData.updateTask(
             req.params.id,
             req.body,
         );
+        //TODO - update the lastTask for the correct users considering a possible change in members and the time range
         if (dataFromDB) {
             res.json(dataFromDB);
         } else {
