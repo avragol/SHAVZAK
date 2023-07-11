@@ -27,7 +27,15 @@ const schema = new mongoose.Schema({
     groupId: { type: mongoose.Schema.Types.ObjectId },
     requierdRoles: [RequierdRole],
     rangeTime: {
-        type: [Date],
+        type: [
+            {
+                type: Date,
+                validate: {
+                    validator: value => value >= new Date(),
+                    message: 'Date must be from now and forward',
+                },
+            },
+        ],
         minLength: 2,
         maxLength: 2,
         required: true

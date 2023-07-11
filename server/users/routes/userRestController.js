@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
                 groupId: dataFromDB.groupId,
                 _id: dataFromDB._id
             });
-            res.json({ msg: "done!", token });
+            res.json({ message: "done!", token });
         }
     } catch (err) {
         handleError(res, err.message, 404)
@@ -82,7 +82,7 @@ router.delete('/:id', async (req, res) => {
     try {
         await userValidationService.userIdValidation(req.params.id);
         const dataFromDb = await userAccessData.deleteUser(req.params.id);
-        res.json({ msg: `user - ${dataFromDb.name} deleted` })
+        res.json({ message: `user - ${dataFromDb.name} deleted` })
     } catch (err) {
         handleError(res, err.message, 400);
     }

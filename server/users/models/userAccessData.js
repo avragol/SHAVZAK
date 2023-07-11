@@ -50,6 +50,14 @@ const updateLastTask = (id, lastTask) => {
     }
 };
 
+const deleteSomeTask = (id, taskDate) => {
+    switch (dbOption) {
+        case "mongo":
+        default:
+            return usersServiceMongo.deleteSomeTask(id, taskDate);
+    }
+};
+
 const deleteUser = (id) => {
     switch (dbOption) {
         case "mongo":
@@ -65,5 +73,6 @@ module.exports = {
     getAllUsers,
     updateUser,
     updateLastTask,
+    deleteSomeTask,
     deleteUser
 };

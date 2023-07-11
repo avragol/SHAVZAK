@@ -25,6 +25,10 @@ const updateLastTask = (id, lastTask) => {
     return User.findByIdAndUpdate(id, { $push: { endTaskDates: lastTask } }, { new: true }).select(["-password"]);
 };
 
+const deleteSomeTask = (id, taskDate) => {
+    return User.findByIdAndUpdate(id, { $pull: { endTaskDates: taskDate } }, { new: true }).select(["-password"]);
+};
+
 const deleteUser = (id) => {
     return User.findByIdAndDelete(id).select(["-password", "-createdAt", "-__v"]);
 }
@@ -36,5 +40,6 @@ module.exports = {
     getUserByEmail,
     updateUser,
     updateLastTask,
+    deleteSomeTask,
     deleteUser,
 }

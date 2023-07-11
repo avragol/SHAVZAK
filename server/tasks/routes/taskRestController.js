@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const handleError = require('../../utils/handleError');
 const taskAccessData = require('../models/taskAccessData');
-const { updateLastTask } = require('../../users/models/userAccessData')
+const userAccessData = require('../../users/models/userAccessData')
 const taskValidationService = require('../../validation/taskValidationService');
 const getUsersForTask = require('../helpers/getUsersForTaskService');
+const areSameArray = require('../helpers/checkIfSameArray');
 
 router.post('/', async (req, res) => {
     try {
         let taskData = req.body;
         await taskValidationService.createTaskValidation(taskData);
         taskData.members = await getUsersForTask(taskData);
-        taskData.members.forEach(async memberId => await updateLastTask(memberId, taskData.rangeTime[1]));
+        taskData.members.forEach(async memberId => await userAccessData.updateLastTask(memberId, taskData.rangeTime[1]));
         const dataFromDB = await taskAccessData.createTask(taskData);
         res.json(dataFromDB);
     } catch (err) {
@@ -42,17 +43,34 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+
 router.put('/:id', async (req, res) => {
     try {
         await taskValidationService.taskIdValidation(req.params.id);
         await taskValidationService.updateTaskValidation(req.body);
-        const dataFromDB = await taskAccessData.updateTask(
-            req.params.id,
-            req.body,
-        );
-        //TODO - update the lastTask for the correct users considering a possible change in members and the time range
-        if (dataFromDB) {
-            res.json(dataFromDB);
+        const originalTaskFromDB = await taskAccessData.getTaskById(req.params.id)
+        if (originalTaskFromDB) {
+            if (!areSameArray(originalTaskFromDB.members, req.body.members) ||
+                !areSameArray(originalTaskFromDB.rangeTime, req.body.rangeTime)) {
+                req.body.members.forEach(async memberId => {
+                    const member = await userAccessData.getUserById(memberId);
+                    if (member.endTaskDates.pop() > updatedTaskFromDB.rangeTime[0]) {
+                        handleError(res, `the user ${member.name} in other task on that time`, 409);
+                    }
+                });
+            };
+            const updatedTaskFromDB = await taskAccessData.updateTask(
+                req.params.id,
+                req.body,
+            );
+            if (!areSameArray(originalTaskFromDB.members, req.body.members) ||
+                !areSameArray(originalTaskFromDB.rangeTime, req.body.rangeTime)) {
+                originalTaskFromDB.members.forEach(async memberId =>
+                    await userAccessData.deleteSomeTask(memberId, originalTaskFromDB.rangeTime[1]));
+                req.body.members.forEach(async memberId =>
+                    await userAccessData.updateLastTask(memberId, req.body.rangeTime[1]));
+            }
+            res.json(updatedTaskFromDB);
         } else {
             handleError(res, "Undefind task", 404);
         }
@@ -61,11 +79,13 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+//Check if sould be option to change the requierd roles
+
 router.delete('/:id', async (req, res) => {
     try {
         await taskValidationService.taskIdValidation(req.params.id);
-        const dataFromDb = await taskAccessData.deleteUser(req.params.id);
-        res.json({ msg: `task - ${dataFromDb.name} deleted` })
+        const dataFromDb = await taskAccessData.deleteTask(req.params.id);
+        res.json({ message: `task - ${dataFromDb.name} deleted` })
     } catch (err) {
         handleError(res, err.message, 400);
     }
