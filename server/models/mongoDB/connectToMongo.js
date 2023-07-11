@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const config = require("config");
 
 const connectToMongo = () => {
-    return mongoose.connect(config.get("dbConfig.url"));
+    return mongoose.connect(process.env.MONGODB_CONFIG);
 };
 
 module.exports = connectToMongo;
