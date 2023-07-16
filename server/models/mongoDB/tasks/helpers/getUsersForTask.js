@@ -3,14 +3,14 @@ const { getAllUsers } = require('../../users/usersService');
 const getUsersForTask = async (taskData) => {
     try {
         const usersFromDB = await getAllUsers();
-        const usersForTask = creareUserForTaskList(usersFromDB, taskData.requierdRoles, taskData.rangeTime, taskData.groupId);
+        const usersForTask = await creareUserForTaskList(usersFromDB, taskData.requierdRoles, taskData.rangeTime, taskData.groupId);
         return usersForTask.map(user => user._id.toString());
     } catch (err) {
         throw err;
     }
 };
 
-const selectUsers = (users, numUsers, requestedRole, taskTimeRange) => {
+const selectUsers = async (users, numUsers, requestedRole, taskTimeRange) => {
     const filteredUsers = users.filter(user =>
         user.roles.includes(requestedRole));
     const sortedUsers = filteredUsers.sort((a, b) => a.lastTask - b.lastTask);
@@ -28,13 +28,15 @@ const selectUsers = (users, numUsers, requestedRole, taskTimeRange) => {
     return { selectedUsers, updatedUsers };
 };
 
-const creareUserForTaskList = (users, rolesForTask, timeRange, groupId) => {
+const creareUserForTaskList = async (users, rolesForTask, timeRange, groupId) => {
     let groupMembers = users.filter(user => user.groupId.toString() === groupId);
-    return rolesForTask.map((role) => {
-        const selectedUsers = selectUsers(groupMembers, role.amount, role.title, timeRange);
+    const selectedUsersPromises = rolesForTask.map(async (role) => {
+        const selectedUsers = await selectUsers(groupMembers, role.amount, role.title, timeRange);
         groupMembers = selectedUsers.updatedUsers;
         return selectedUsers.selectedUsers;
-    }).flat();
+    });
+    const selectedUsers = await Promise.all(selectedUsersPromises);
+    return selectedUsers.flat();
 };
 
 module.exports = getUsersForTask;

@@ -3,6 +3,7 @@ const Joi = require('joi');
 const RequierdRoleSchema = Joi.object({
     title: Joi.string().trim().min(2).max(256).required(),
     amount: Joi.number().min(1).required(),
+    _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 });
 
 const taskSchema = Joi.object({

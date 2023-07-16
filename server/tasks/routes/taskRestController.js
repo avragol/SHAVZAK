@@ -43,13 +43,16 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
+/* manual change */
 router.put('/:id', async (req, res) => {
     try {
         await taskValidationService.taskIdValidation(req.params.id);
         await taskValidationService.updateTaskValidation(req.body);
         const originalTaskFromDB = await taskAccessData.getTaskById(req.params.id)
         if (originalTaskFromDB) {
+            if (!areSameArray(originalTaskFromDB.requierdRoles, req.body.requierdRoles)) {
+                handleError(res, `for generate users for other roles, use the correct API`)
+            }
             if (!areSameArray(originalTaskFromDB.members, req.body.members) ||
                 !areSameArray(originalTaskFromDB.rangeTime, req.body.rangeTime)) {
                 req.body.members.forEach(async memberId => {
@@ -79,13 +82,53 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-//Check if sould be option to change the requierd roles
+
+/* automtic change */
+router.put('/roles/:id', async (req, res) => {
+    try {
+        await taskValidationService.taskIdValidation(req.params.id);
+        await taskValidationService.updateTaskValidation(req.body);
+        const originalTaskFromDB = await taskAccessData.getTaskById(req.params.id);
+        const requierdRolesFromDB = originalTaskFromDB.requierdRoles.map(role => {
+            return { title: role.title, amount: role.amount }
+        });
+        const requierdRolesFromClient = req.body.requierdRoles.map(role => {
+            return { title: role.title, amount: role.amount }
+        });
+        if (originalTaskFromDB) {
+            if (areSameArray(requierdRolesFromDB, requierdRolesFromClient)) {
+                return handleError(res, `no change on the role array, for change other parameters manually, use the correct API`, 400);
+            };
+            const originalRangeTime = originalTaskFromDB.rangeTime.map(i => i.toISOString())
+            if (originalTaskFromDB.name !== req.body.name ||
+                originalTaskFromDB.groupId.toHexString() !== req.body.groupId ||
+                !areSameArray(originalTaskFromDB.members, req.body.members) ||
+                !areSameArray(originalRangeTime, req.body.rangeTime)) {
+                return handleError(res, `for change other parameters manually, use the correct API`, 400);
+            }
+            originalTaskFromDB.members.forEach(async memberId =>
+                await userAccessData.deleteSomeTask(memberId, originalTaskFromDB.rangeTime[1]));
+            req.body.members = await getUsersForTask(req.body);
+            req.body.members.forEach(async memberId => await userAccessData.updateLastTask(memberId, req.body.rangeTime[1]));
+            const updatedTaskFromDB = await taskAccessData.updateTask(
+                req.params.id,
+                req.body,
+            );
+            res.json(updatedTaskFromDB);
+        } else handleError(res, "User Undefined", 404);
+    } catch (err) {
+        handleError(res, err.message, 400);
+    }
+});
 
 router.delete('/:id', async (req, res) => {
     try {
         await taskValidationService.taskIdValidation(req.params.id);
+        const task = await taskAccessData.getTaskById(req.params.id);
+        task.members.forEach(async member =>
+            await userAccessData.deleteSomeTask(member, task.rangeTime[1]));
         const dataFromDb = await taskAccessData.deleteTask(req.params.id);
-        res.json({ message: `task - ${dataFromDb.name} deleted` })
+        res.json({ message: `task - ${dataFromDb.name} deleted and the history of the members was updated` })
     } catch (err) {
         handleError(res, err.message, 400);
     }

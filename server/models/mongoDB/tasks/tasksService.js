@@ -10,19 +10,19 @@ const getTaskByEmail = (email) => {
 };
 
 const getAllTasks = () => {
-    return Task.find().select(["-password"]);
+    return Task.find();
 }
 
 const getTaskById = id => {
-    return Task.findById(id).select(["-password"]);
+    return Task.findById(id);
 }
 
 const updateTask = (id, taskToUpdate) => {
-    return Task.findByIdAndUpdate(id, taskToUpdate, { new: true }).select(["-password"]);
+    return Task.findByIdAndUpdate(id, taskToUpdate, { new: true });
 }
 
 const updateLastTask = (id, lastTask) => {
-    return Task.findByIdAndUpdate(id, { $push: { endTaskDates: lastTask } }, { new: true }).select(["-password"]);
+    return Task.findByIdAndUpdate(id, { $push: { endTaskDates: lastTask } }, { new: true });
 };
 
 const deleteTask = (id) => {
