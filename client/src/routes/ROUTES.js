@@ -4,6 +4,7 @@ const ROUTES = {
     ABOUT: "/about",
     REGISTER: "/register",
     LOGIN: "/login",
+    USERS: "/users",
 }
 
 export default ROUTES;

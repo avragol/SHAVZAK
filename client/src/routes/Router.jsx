@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import ROUTES from "./ROUTES";
 import HomePage from "../pages/HomePage";
+import Users from "../pages/Users";
 
 const Router = () => {
     return (
@@ -10,6 +11,7 @@ const Router = () => {
             <Route path={ROUTES.HOME} element={<HomePage />} />
             <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
             <Route path={ROUTES.ABOUT} element={<h1>About Us</h1>} />
+            <Route path={ROUTES.USERS} element={<Users />} />
             <Route path={ROUTES.REGISTER} element={<h1>Register</h1>} />
             <Route path={ROUTES.LOGIN} element={<h1>Login</h1>} />
             {/* 404 page */}

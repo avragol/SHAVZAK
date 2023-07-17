@@ -8,7 +8,7 @@ const navigation = [
     { label: "Home", url: ROUTES.HOME },
     { label: "About", url: ROUTES.ABOUT },
     { label: "Register", url: ROUTES.REGISTER },
-    { label: "Login", url: ROUTES.LOGIN },
+    { label: "Users", url: ROUTES.USERS },
 ]
 
 const Navbar = () => {
