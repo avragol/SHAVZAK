@@ -1,17 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
 
 import Router from './routes/Router';
 import Navbar from './components/Navbar';
 
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
+    <div className='bg-bgcColor h-screen'>
       <header><Navbar /></header>
       <main><Router /></main>
       <footer><h3>footer</h3></footer>
-    </BrowserRouter>
+    </div>
   );
 }
 

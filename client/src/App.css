@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #F2F2F2;
+}
+
+@layer components {
+
+  .button {
+    @apply rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm
+  }
+
+}
