@@ -8,9 +8,7 @@ const groupSchema = new mongoose.Schema({
         minLength: 2,
         required: true,
     },
-    members: [{
-        type: mongoose.Schema.Types.ObjectId,
-    }],
+    members: [String],
     managerId: {
         type: mongoose.Schema.Types.ObjectId,
     },
