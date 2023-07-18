@@ -1,11 +1,23 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const UserCard = ({ user }) => {
     const [groupName, setGroupName] = useState("");
 
     useEffect(() => {
-        setGroupName("Group 1");
-    }, []);
+        // Fetch group data from the server
+        (async () => {
+            try {
+                const { data } = await axios.get(`/groups/${user.groupId}`);
+                setGroupName(data.name);
+            } catch (err) {
+                console.log(err);
+            }
+        })()
+    }, [user.groupId]);
+
+    //convert the endTaskDate to readability string
+    const dateObj = new Date(user.endTaskDates[user.endTaskDates.length - 1]);
     const dateOptions = {
         year: 'numeric',
         month: 'numeric',
@@ -15,12 +27,12 @@ const UserCard = ({ user }) => {
         hour12: false,
         timeZone: 'Asia/Jerusalem'
     };
-    const lastTask = user.endTaskDates[user.endTaskDates.length - 1].toLocaleDateString('en-US', dateOptions);
-    console.log(JSON.stringify(new Date(0)));
+    const lastTask = (dateObj > 0) ? dateObj.toLocaleDateString('en-US', dateOptions) : "There is no history";
+
     return (
         <div className="mx-auto right-0 mt-2 w-60 ">
             <div className="bg-white rounded overflow-hidden shadow-lg pb-2">
-                <div className="text-center p-6 bg-gray-800 border-b">
+                <div className="text-center p-6 bg-mainCustomColor border-b">
                     <svg
                         aria-hidden="true"
                         role="img"
@@ -40,7 +52,7 @@ const UserCard = ({ user }) => {
                 </div>
                 <div className="">
                     <div className="px-4 py-2 flex border-b">
-                        <div className="text-green-600">
+                        <div className="text-secondaryColor">
                             <svg
                                 fill="none"
                                 stroke="currentColor"
@@ -55,11 +67,11 @@ const UserCard = ({ user }) => {
                         </div>
                         <div className="pl-3 ">
                             <p className="text-sm font-medium text-gray-800 leading-none">Roles</p>
-                            <p className="text-xs text-gray-500">{user.roles.join(', ')}</p>
+                            <p className="text-xs text-gray-500">{user.roles.join(', ') || "There is no roles yet"}</p>
                         </div>
                     </div>
                     <div className="px-4 py-2 flex">
-                        <div className="text-gray-800">
+                        <div className="text-secondaryColor">
                             <svg
                                 fill="none"
                                 stroke="currentColor"
@@ -78,7 +90,7 @@ const UserCard = ({ user }) => {
                         </div>
                     </div>
                     <div className="px-4 py-2 flex">
-                        <div className="text-blue-600">
+                        <div className="text-secondaryColor">
                             <svg
                                 fill="none"
                                 stroke="currentColor"
