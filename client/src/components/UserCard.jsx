@@ -30,8 +30,8 @@ const UserCard = ({ user }) => {
     const lastTask = (dateObj > 0) ? dateObj.toLocaleDateString('en-US', dateOptions) : "There is no history";
 
     return (
-        <div className="mx-auto right-0 mt-2 w-60 ">
-            <div className="bg-white rounded overflow-hidden shadow-lg pb-2">
+        <div className="mx-auto right-0 mt-2 w-60 hover:scale-105 duration-200 ">
+            <div className="bg-white rounded overflow-hidden shadow-lg pb-2 hover:cursor-pointer">
                 <div className="text-center p-6 bg-mainCustomColor border-b">
                     <svg
                         aria-hidden="true"
