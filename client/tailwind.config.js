@@ -11,9 +11,20 @@ module.exports = {
         mainCustomColorHover: "#2F80ED90",
         secondaryColor: "#FF7F50",
         textColor: "#333333",
-        accentColor: "#66BB6A"
-      }
+        accentColor: "#66BB6A",
+        dark: {
+          background: "#1A202C",
+          text: "#F8FAFC",
+        },
+      },
+    },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ['dark', 'dark-hover'],
+      textColor: ['dark', 'dark-hover'],
     },
   },
   plugins: [],
-}
+  darkMode: "class",
+};

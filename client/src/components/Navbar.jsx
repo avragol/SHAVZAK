@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import ROUTES from "../routes/ROUTES";
 import logo from '../logo.svg'
+import DarkModeToggle from './DarkModeToggle';
 
 const navigation = [
     { label: "Home", url: ROUTES.HOME },
@@ -13,9 +14,9 @@ const navigation = [
 
 const Navbar = () => {
     return (
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <nav className="flex items-center justify-between p-6 lg:px-8 dark:bg-mainCustomColor " aria-label="Global">
             <div className="flex lg:flex-1">
-                <NavLink to={ROUTES.HOME} className="-m-1.5 p-1.5">
+                <NavLink to={ROUTES.HOME} className="-m-1.5 p-1.5 ">
                     <span className="sr-only">Your Company</span>
                     <img
                         className="h-12 w-auto"
@@ -34,15 +35,17 @@ const Navbar = () => {
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
             </div> */}
-            <div className="hidden lg:flex lg:gap-x-12">
+            <div className="hidden lg:flex lg:gap-x-12 ">
                 {navigation.map((item) => (
-                    <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900">
+                    <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
                         {item.label}
                     </NavLink>
                 ))}
             </div>
-            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                <NavLink to={ROUTES.LOGIN} className="text-sm font-semibold leading-6 text-gray-900">
+
+            <div className=" lg:flex lg:flex-1 lg:justify-end items-center gap-2">
+                <DarkModeToggle />
+                <NavLink to={ROUTES.LOGIN} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text hidden lg:block">
                     Log in <span aria-hidden="true">&rarr;</span>
                 </NavLink>
             </div>

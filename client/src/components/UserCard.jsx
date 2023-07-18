@@ -31,12 +31,12 @@ const UserCard = ({ user }) => {
 
     return (
         <div className="mx-auto right-0 mt-2 w-60 hover:scale-105 duration-200 ">
-            <div className="bg-white rounded overflow-hidden shadow-lg pb-2 hover:cursor-pointer">
-                <div className="text-center p-6 bg-mainCustomColor border-b">
+            <div className="bg-white dark:bg-gray-800 rounded overflow-hidden shadow-lg pb-2 hover:cursor-pointer">
+                <div className="text-center p-6 bg-mainCustomColor dark:bg-accentColor border-b dark:border-gray-500">
                     <svg
                         aria-hidden="true"
                         role="img"
-                        className="h-24 w-24 text-white rounded-full mx-auto"
+                        className="h-24 w-24 text-white dark:text-dark-background  rounded-full mx-auto"
                         width="32"
                         height="32"
                         preserveAspectRatio="xMidYMid meet"
@@ -47,11 +47,11 @@ const UserCard = ({ user }) => {
                             d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
                         ></path>
                     </svg>
-                    <p className="pt-2 text-lg font-semibold text-gray-50">{user.name}</p>
-                    <p className="text-sm text-gray-100">{user.email}</p>
+                    <p className="pt-2 text-lg font-semibold text-gray-50 dark:text-dark-background ">{user.name}</p>
+                    <p className="text-sm text-gray-100 dark:text-dark-background ">{user.email}</p>
                 </div>
                 <div className="">
-                    <div className="px-4 py-2 flex border-b">
+                    <div className="px-4 py-2 flex border-b dark:border-gray-500 dark:border-gray-500">
                         <div className="text-secondaryColor">
                             <svg
                                 fill="none"
@@ -66,11 +66,11 @@ const UserCard = ({ user }) => {
                             </svg>
                         </div>
                         <div className="pl-3 ">
-                            <p className="text-sm font-medium text-gray-800 leading-none">Roles</p>
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-100 leading-none">Roles</p>
                             <p className="text-xs text-gray-500">{user.roles.join(', ') || "There is no roles yet"}</p>
                         </div>
                     </div>
-                    <div className="px-4 py-2 flex">
+                    <div className="px-4 py-2 flex border-b dark:border-gray-500">
                         <div className="text-secondaryColor">
                             <svg
                                 fill="none"
@@ -85,7 +85,7 @@ const UserCard = ({ user }) => {
                             </svg>
                         </div>
                         <div className="pl-3">
-                            <p className="text-sm font-medium text-gray-800 leading-none">Group</p>
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-100 leading-none">Group</p>
                             <p className="text-xs text-gray-500">{groupName}</p>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ const UserCard = ({ user }) => {
                             </svg>
                         </div>
                         <div className="pl-3">
-                            <p className="text-sm font-medium text-gray-800 leading-none">Last Task</p>
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-100 leading-none">Last Task</p>
                             <p className="text-xs text-gray-500">
                                 {lastTask}
                             </p>
