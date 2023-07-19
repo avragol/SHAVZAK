@@ -2,13 +2,14 @@ import './App.css';
 
 import Router from './routes/Router';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
-    <div className='bg-bgcColor dark:bg-dark-background dark:text-dark-text min-h-screen'>
+    <div className='bg-bgcColor dark:bg-dark-background dark:text-dark-text min-h-screen flex flex-col justify-between'>
       <header><Navbar /></header>
       <main className='max-w-screen-lg mx-auto'><Router /></main>
-      <footer><h3>footer</h3></footer>
+      <Footer />
     </div>
   );
 }

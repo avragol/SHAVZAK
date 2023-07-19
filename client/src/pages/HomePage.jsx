@@ -1,7 +1,7 @@
 const HomePage = () => {
     return (
         <div className="text-center">
-            <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+            <div className="mx-auto max-w-2xl py-32 sm:py-8 lg:py-8">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold tracking-tight text-textColor sm:text-6xl">
                         Welcome To SHAVZAK!

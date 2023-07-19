@@ -20,11 +20,14 @@ const Users = () => {
     }, []);
 
     return (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {users ?
-                users.map((user, i) => <UserCard user={user} key={i} />) : ""
-            }
-        </div>
+        <>
+            <h2 className="text-center py-2 text-3xl font-bold border-b border-black mb-2">Users</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {users ?
+                    users.map((user, i) => <UserCard user={user} key={i} />) : ""
+                }
+            </div>
+        </>
     )
 }
 export default Users;
