@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
         await userValidationService.registerUserValidation(req.body);
         req.body.password = await hashService.generateHash(req.body.password);
         const dataFromDB = await userAccessData.registerUser(req.body);
+        delete dataFromDB.password;
         res.json(dataFromDB);
     } catch (err) {
         handleError(res, err.message, 404)

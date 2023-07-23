@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import registerSchema from '../validation/users/register';
+import { feildValidation } from '../validation/feildValidation';
+
 const formFields = [
     { name: 'name', label: 'Name', type: 'text', required: true },
     { name: 'email', label: 'Email', type: 'email', required: true },
     { name: 'password', label: 'Password', type: 'password', required: true },
+    { name: 'rePassword', label: 'RePassword', type: 'password', required: true },
     { name: 'roles', label: 'Roles', type: 'text', required: false },
 ];
 
@@ -13,25 +17,52 @@ const RegistrationPage = () => {
         name: '',
         email: '',
         password: '',
+        rePassword: '',
         groupId: '',
-        isManager: false,
+        roles: [],
+    });
+
+    const [errors, setErrors] = useState({
+        name: '',
+        email: '',
+        password: '',
+        rePassword: '',
+        groupId: '',
         roles: [],
     });
 
     const [groups, setGroups] = useState([]);
+    const [ableButton, setAbleButton] = useState(false);
 
     useEffect(() => {
         // Fetch groups from the server
         fetchGroups();
+        setAbleButton(false);
     }, []);
 
     const fetchGroups = async () => {
         try {
-            const response = await axios.get('/groups'); // Adjust the API endpoint as needed
+            const response = await axios.get('/groups');
             setGroups(response.data);
         } catch (error) {
             console.error('Error fetching groups:', error);
         }
+    };
+
+    const checkIfCanAble = ({ name, value }) => {
+        for (const field of formFields) {
+            if (field.name === name && field.name !== "rePssword") {
+                if (field.required && (!value || feildValidation(registerSchema[name], value, name))) {
+                    return false;
+                }
+            }
+            else if (field.required && (!formData[field.name] || errors[field.name])) {
+                return false;
+            }
+            if (name === "password") return value === formData.rePassword;
+            if (name === "rePassword") return value === formData.password;
+        }
+        return true;
     };
 
     const handleChange = (e) => {
@@ -48,21 +79,36 @@ const RegistrationPage = () => {
                 [name]: value,
             }));
         }
+        if (name === "rePassword") setErrors((prevErrors) => ({
+            ...prevErrors,
+            rePassword: formData.password !== value ? "Not Match" : "",
+        }));
+        if (name === "password") setErrors((prevErrors) => ({
+            ...prevErrors,
+            rePassword: formData.rePassword !== value ? "Not Match" : "",
+        }));
+
+        if (name !== "rePassword") setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: feildValidation(registerSchema[name], value, name),
+        }));
+
+        if (name === "groupId") {
+            setAbleButton(!!value);
+        } else {
+            setAbleButton(checkIfCanAble({ name, value }));
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Validate the form data using Joi schema
-        /*  const { error } = registerSchema.validate(formData);
- 
-         if (error) {
-             // Handle validation errors here
-             console.error('Validation Error:', error.details);
-         } else { */
-        // Proceed with form submission
-        console.log('Form submitted successfully:', formData);
-        // You can make an API call here to submit the data to the server
+        try {
+            delete formData.rePassword;
+            const { data } = await axios.post('/users', formData)
+            console.log(data);
+        } catch (err) {
+            console.log("error when send to server:", err.message);
+        }
     };
 
     return (
@@ -87,6 +133,7 @@ const RegistrationPage = () => {
                                 {!field.required && (
                                     <p className="text-sm text-gray-500">{`(Optional${field.name === "roles" && ", separate them with a comma without a space "})`}</p>
                                 )}
+                                <p className="text-sm text-red-500">{errors[field.name]}</p>
                             </div>
                         ))}
                         <div className="mb-4">
@@ -107,15 +154,13 @@ const RegistrationPage = () => {
                                     </option>
                                 ))}
                             </select>
-                            {formFields.find((field) => field.name === 'groupId')?.required &&
-                                !formData.groupId && (
-                                    <p className="text-sm text-red-500">This field is required.</p>
-                                )}
+                            <p className="text-sm text-gray-500">{`(Must choose group from the list)`}</p>
                         </div>
                     </div>
                     <button
                         type="submit"
-                        className="flex items-center justify-center bg-mainCustomColor dark:bg-accentColor text-white py-2 px-4 rounded-lg mt-2 w-2/3 mx-[16.66666%]"
+                        disabled={!ableButton}
+                        className={`flex items-center justify-center ${ableButton ? 'bg-mainCustomColor dark:bg-accentColor' : 'bg-gray-400 cursor-not-allowed'}text-white py-2 px-4 rounded-lg mt-2 w-2/3 mx-[16.66666%] transition-colors duration-300 ease-in-out`}
                     >
                         Register<svg
                             className="w-4 h-4 ml-2 inline"
