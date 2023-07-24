@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import ROUTES from "../routes/ROUTES";
 import logo from '../logo.svg'
-import DarkModeToggle from './DarkModeToggle';
+import DarkModeToggleComp from './DarkModeToggleComp';
 
 const navigation = [
     { label: "Home", url: ROUTES.HOME },
@@ -44,7 +44,7 @@ const Navbar = () => {
             </div>
 
             <div className=" lg:flex lg:flex-1 lg:justify-end items-center gap-2">
-                <DarkModeToggle />
+                <DarkModeToggleComp />
                 <NavLink to={ROUTES.LOGIN} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text hidden lg:block">
                     Log in <span aria-hidden="true">&rarr;</span>
                 </NavLink>
