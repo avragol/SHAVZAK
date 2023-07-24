@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+
 const HomePage = () => {
+
+    const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
     return (
         <div className="text-center">
             <div className="mx-auto max-w-2xl py-32 sm:py-8 lg:py-8">
@@ -6,6 +10,7 @@ const HomePage = () => {
                     <h1 className="text-4xl font-bold tracking-tight text-textColor sm:text-6xl">
                         Welcome To SHAVZAK!
                     </h1>
+                    <h2>{isLoggedIn ? "yes" : "no"}</h2>
                     <p className="mt-6 text-lg leading-8 text-gray-600">
                         Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
                         fugiat veniam occaecat fugiat aliqua.

@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import loginSchema from '../validation/users/login';
 import { feildValidation } from '../validation/feildValidation';
+import useLoggedIn from '../hooks/useLoggedIn';
 
 const LoginPage = () => {
+    const login = useLoggedIn();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,11 +24,12 @@ const LoginPage = () => {
 
     const navigation = useNavigate();
 
-    const checkIfCanAble = () => {
-        for (const field of formData) {
-            if (!formData[field.name] || errors[field.name]) {
-                return false;
-            }
+    const checkIfCanAble = ({ name, value }) => {
+        //need to check it
+        if (!formData.email || errors.email
+            || !formData.password || errors.password
+            || !value || feildValidation(loginSchema[name], value, name)) {
+            return false;
         }
         return true;
     };
@@ -41,13 +45,15 @@ const LoginPage = () => {
             [name]: feildValidation(loginSchema[name], value, name),
         }));
 
-        setAbleButton(checkIfCanAble());
+        setAbleButton(checkIfCanAble({ name, value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const { data } = await axios.post('/users/login', formData);
+            localStorage.setItem("userToken", data.token);
+            login();
             toast.success(`Welcome Back! You are now logged in.`);
             navigation("/");
         } catch (err) {
