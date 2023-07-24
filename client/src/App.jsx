@@ -1,11 +1,19 @@
 import './App.css';
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from "react";
 
 import Router from './routes/Router';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import useLoggedIn from "./hooks/useLoggedIn";
 
 const App = () => {
+
+  const loggedIn = useLoggedIn();
+  useEffect(() => {
+    loggedIn();
+  }, [loggedIn]);
+
   return (
     <div className='bg-bgcColor dark:bg-dark-background dark:text-dark-text min-h-screen flex flex-col justify-between'>
       <Toaster
