@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import registerSchema from '../validation/users/register';
 import { feildValidation } from '../validation/feildValidation';
@@ -39,6 +41,8 @@ const RegistrationPage = () => {
         fetchGroups();
         setAbleButton(false);
     }, []);
+
+    const navigation = useNavigate();
 
     const fetchGroups = async () => {
         try {
@@ -88,15 +92,22 @@ const RegistrationPage = () => {
             rePassword: formData.rePassword !== value ? "Not Match" : "",
         }));
 
-        if (name !== "rePassword") setErrors((prevErrors) => ({
+        if (!["rePassword", "roles"].includes(name)) setErrors((prevErrors) => ({
             ...prevErrors,
             [name]: feildValidation(registerSchema[name], value, name),
         }));
+        if (name === 'roles') {
+            const rolesArray = value.split(',').map((role) => role.trim());
+            setErrors((prevFormData) => ({
+                ...prevFormData,
+                roles: feildValidation(registerSchema.roles, rolesArray, "roles"),
+            }));
+        }
 
         if (name === "groupId") {
-            setAbleButton(!!value);
+            setAbleButton(!!value && checkIfCanAble({ name, value }));
         } else {
-            setAbleButton(checkIfCanAble({ name, value }));
+            setAbleButton(checkIfCanAble({ name, value }) && !!formData.groupId);
         }
     };
 
@@ -105,8 +116,10 @@ const RegistrationPage = () => {
         try {
             delete formData.rePassword;
             const { data } = await axios.post('/users', formData)
-            console.log(data);
+            toast.success(`Welcome ${data.name}! Please login.`);
+            navigation("/login")
         } catch (err) {
+            toast.error(err.message);
             console.log("error when send to server:", err.message);
         }
     };
@@ -149,7 +162,7 @@ const RegistrationPage = () => {
                             >
                                 <option value="">Select a group</option>
                                 {groups.map((group) => (
-                                    <option key={group.id} value={group._id}>
+                                    <option key={group._id} value={group._id}>
                                         {group.name}
                                     </option>
                                 ))}
