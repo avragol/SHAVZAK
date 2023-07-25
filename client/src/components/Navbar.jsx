@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -6,6 +7,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import ROUTES from "../routes/ROUTES";
 import logo from '../logo.svg'
 import DarkModeToggleComp from './DarkModeToggleComp';
+import { authActions } from "../features/auth";
 
 const navigation = [
     { label: "Home", url: ROUTES.HOME },
@@ -15,7 +17,9 @@ const navigation = [
 ]
 
 const Navbar = () => {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
 
     return (
         <>
@@ -50,9 +54,12 @@ const Navbar = () => {
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-2">
                     <DarkModeToggleComp />
-                    <NavLink to={ROUTES.LOGIN} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text">
-                        Log in <span aria-hidden="true">&rarr;</span>
-                    </NavLink>
+                    {isLoggedIn ?
+                        <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text cursor-pointer" onClick={() => dispatch(authActions.logOut())}>
+                            Log out <span aria-hidden="true">&rarr;</span></div>
+                        : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
+                            Log in <span aria-hidden="true">&rarr;</span>
+                        </NavLink>}
                 </div>
             </nav>
             <Transition
@@ -100,9 +107,12 @@ const Navbar = () => {
                                             </NavLink>
                                         ))}
                                         <DarkModeToggleComp />
-                                        <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
-                                            Log in <span aria-hidden="true">&rarr;</span>
-                                        </NavLink>
+                                        {isLoggedIn ?
+                                            <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text" onClick={() => dispatch(authActions.logOut())}>
+                                                Log out <span aria-hidden="true">&rarr;</span></div>
+                                            : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
+                                                Log in <span aria-hidden="true">&rarr;</span>
+                                            </NavLink>}
                                     </div>
                                 </div>
                             </div>
