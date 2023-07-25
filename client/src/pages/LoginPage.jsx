@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -21,18 +21,15 @@ const LoginPage = () => {
     });
 
     const [ableButton, setAbleButton] = useState(false);
+    useEffect(() => {
+        setAbleButton(
+            !Object.values(errors).some(error => error) &&
+            formData.email &&
+            formData.password
+        );
+    }, [errors, formData]);
 
     const navigation = useNavigate();
-
-    const checkIfCanAble = ({ name, value }) => {
-        //need to check it
-        if (!formData.email || errors.email
-            || !formData.password || errors.password
-            || !value || feildValidation(loginSchema[name], value, name)) {
-            return false;
-        }
-        return true;
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -44,8 +41,6 @@ const LoginPage = () => {
             ...prevErrors,
             [name]: feildValidation(loginSchema[name], value, name),
         }));
-
-        setAbleButton(checkIfCanAble({ name, value }));
     };
 
     const handleSubmit = async (e) => {
@@ -57,16 +52,16 @@ const LoginPage = () => {
             toast.success(`Welcome Back! You are now logged in.`);
             navigation("/");
         } catch (err) {
-            toast.error(err.message);
+            toast.error(`${err.message}. ${err.response.data.message}.`);
             console.log("Error when sending login data to the server:", err.message);
         }
     };
 
     return (
-        <div className="container mt-8 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-10 shadow-lg w-1/3 mx-auto">
+        <div className="container mt-8 p-4 mx-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-10 shadow-lg w-full sm:w-4/5 md:w-2/5 mx-auto">
                 <h2 className="text-4xl text-center font-semibold mb-4">Login</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="">
                     <div className="grid gap-4">
                         <div className="mb-4">
                             <label htmlFor="email" className="block font-medium mb-1">
@@ -80,9 +75,9 @@ const LoginPage = () => {
                                 onChange={handleChange}
                                 className="border border-gray-300 dark:border-gray-600 rounded-lg p-2 w-full dark:bg-gray-600"
                             />
-                            <p className="text-sm text-red-500">{errors.email}</p>
+                            <p className="text-sm text-red-500 ">{errors.email}</p>
                         </div>
-                        <div className="mb-4">
+                        <div className="mb-4 w-full">
                             <label htmlFor="password" className="block font-medium mb-1">
                                 Password
                             </label>
