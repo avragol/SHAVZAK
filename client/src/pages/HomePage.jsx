@@ -9,7 +9,7 @@ const HomePage = () => {
                     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-16 gap-x-8 items-center lg:max-w-none lg:grid-cols-2">
                         <div className="max-w-xl text-center sm:text-left lg:pr-16">
                             <h1 className="text-4xl font-bold tracking-tight text-textColor dark:text-dark-text sm:text-6xl">Coordinate your team's work in one place</h1>
-                            <p className="mt-4 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, eius.</p>
+                            <p className="mt-4 text-gray-500">Our platform makes it easy to delegate tasks, and set timelines, so your team can collaborate smoothly to get more done.</p>
                             <div className='flex gap-2'>
                                 <Link className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-textColor bg-secondaryColor border border-transparent rounded-md hover:opacity-80 mt-2" to="/about">Get Started</Link>
                                 <Link className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-textColor dark:text-dark-text dark:hover:text-textColor border-secondaryColor border border-transparent rounded-md hover:bg-secondaryColor transition-colors duration-200 mt-2" to="/register">Sign Up<svg
