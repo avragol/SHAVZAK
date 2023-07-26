@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
+import toast from 'react-hot-toast';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import ROUTES from "../routes/ROUTES";
@@ -20,6 +21,12 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
+
+    const handleLogoutClick = () => {
+        localStorage.removeItem("userToken");
+        dispatch(authActions.logOut())
+        toast.success(`Goodbye! see you soon..`);
+    }
 
     return (
         <>
@@ -55,7 +62,7 @@ const Navbar = () => {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-2">
                     <DarkModeToggleComp />
                     {isLoggedIn ?
-                        <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text cursor-pointer" onClick={() => dispatch(authActions.logOut())}>
+                        <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text cursor-pointer" onClick={handleLogoutClick}>
                             Log out <span aria-hidden="true">&rarr;</span></div>
                         : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
                             Log in <span aria-hidden="true">&rarr;</span>
@@ -108,7 +115,7 @@ const Navbar = () => {
                                         ))}
                                         <DarkModeToggleComp />
                                         {isLoggedIn ?
-                                            <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text" onClick={() => dispatch(authActions.logOut())}>
+                                            <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text" onClick={handleLogoutClick}>
                                                 Log out <span aria-hidden="true">&rarr;</span></div>
                                             : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
                                                 Log in <span aria-hidden="true">&rarr;</span>
