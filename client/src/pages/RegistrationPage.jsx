@@ -126,7 +126,7 @@ const RegistrationPage = () => {
 
     return (
         <div className="container mt-8 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg w-3/4 mx-auto ">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-10 shadow-lg mx-auto ">
                 <h2 className="text-4xl text-center font-semibold mb-4">Registration</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="grid gap-4 md:grid-cols-2">

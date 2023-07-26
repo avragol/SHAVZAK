@@ -41,7 +41,7 @@ const UserCard = ({ user }) => {
 
     return (
         <div>
-            <div className="mx-auto right-0 mt-2 w-60 hover:scale-105 duration-200 ">
+            <div className="mx-auto right-0 mt-2 w-60 opacity-95 dark:opacity-90 hover:opacity-100 dark:hover:opacity-100 hover:scale-105 duration-200 ">
                 <div className="bg-white dark:bg-gray-800 rounded overflow-hidden shadow-lg pb-2 hover:cursor-pointer" onClick={handleCardClick}>
                     <div className="text-center p-6 bg-mainCustomColor dark:bg-accentColor border-b dark:border-gray-500">
                         <svg

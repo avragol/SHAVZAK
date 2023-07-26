@@ -58,8 +58,8 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="container mt-8 p-4 mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-10 shadow-lg w-full sm:w-4/5 md:w-2/5 mx-auto">
+        <div className="mt-8 p-4 mx-auto md:w-96">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-10 shadow-lg w-full">
                 <h2 className="text-4xl text-center font-semibold mb-4">Login</h2>
                 <form onSubmit={handleSubmit} className="">
                     <div className="grid gap-4">
