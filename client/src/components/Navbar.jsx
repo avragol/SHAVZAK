@@ -11,11 +11,11 @@ import DarkModeToggleComp from './DarkModeToggleComp';
 import { authActions } from "../features/auth";
 
 const navigation = [
-    { label: "Home", url: ROUTES.HOME },
-    { label: "About", url: ROUTES.ABOUT },
-    { label: "Register", url: ROUTES.REGISTER },
-    { label: "Users", url: ROUTES.USERS },
-    { label: "My-Shavzak", url: ROUTES.MYSHVZAK },
+    { label: "Home", url: ROUTES.HOME, auth: "all" },
+    { label: "About", url: ROUTES.ABOUT, auth: "all" },
+    { label: "Register", url: ROUTES.REGISTER, auth: "all" },
+    { label: "Users", url: ROUTES.USERS, auth: "all" },
+    { label: "My-Shavzak", url: ROUTES.MYSHVZAK, auth: "user" },
 ]
 
 const Navbar = () => {
@@ -53,7 +53,7 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:gap-x-12 ">
-                    {navigation.map((item) => (
+                    {navigation.map((item) => (item.auth === 'all' || (isLoggedIn)) && (
                         <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
                             {item.label}
                         </NavLink>
@@ -109,7 +109,7 @@ const Navbar = () => {
                             <div className="mt-6 flow-root">
                                 <div className="-my-6 divide-y divide-gray-500/10">
                                     <div className="space-y-2 py-6 flex flex-col">
-                                        {navigation.map((item) => (
+                                        {navigation.map((item) => (item.auth === 'all' || (isLoggedIn)) && (
                                             <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
                                                 {item.label}
                                             </NavLink>

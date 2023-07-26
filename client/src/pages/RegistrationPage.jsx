@@ -46,8 +46,8 @@ const RegistrationPage = () => {
 
     const fetchGroups = async () => {
         try {
-            const response = await axios.get('/groups');
-            setGroups(response.data);
+            const { data } = await axios.get('/groups');
+            setGroups(data);
         } catch (error) {
             console.error('Error fetching groups:', error);
         }
