@@ -15,6 +15,7 @@ const navigation = [
     { label: "About", url: ROUTES.ABOUT },
     { label: "Register", url: ROUTES.REGISTER },
     { label: "Users", url: ROUTES.USERS },
+    { label: "My-Shavzak", url: ROUTES.MYSHVZAK },
 ]
 
 const Navbar = () => {

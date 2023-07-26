@@ -5,6 +5,7 @@ const ROUTES = {
     REGISTER: "/register",
     LOGIN: "/login",
     USERS: "/users",
+    MYSHVZAK: "/my-shavzak",
 }
 
 export default ROUTES;
