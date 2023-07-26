@@ -11,11 +11,11 @@ const createTask = (taskData) => {
     }
 };
 
-const getTaskByEmail = (email) => {
+const getTasksForUser = (userId) => {
     switch (dbOption) {
         case "mongo":
         default:
-            return tasksServiceMongo.getTaskByEmail(email);
+            return tasksServiceMongo.getTasksForUser(userId);
     }
 };
 const getTaskById = (id) => {
@@ -60,7 +60,7 @@ const deleteTask = (id) => {
 
 module.exports = {
     createTask,
-    getTaskByEmail,
+    getTasksForUser,
     getTaskById,
     getAllTasks,
     updateTask,

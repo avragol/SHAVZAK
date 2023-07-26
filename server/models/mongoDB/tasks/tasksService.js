@@ -5,9 +5,9 @@ const createTask = taskData => {
     return task.save();
 };
 
-const getTaskByEmail = (email) => {
-    return Task.findOne({ email });
-};
+const getTasksForUser = userId => {
+    return Task.find({ members: userId });
+}
 
 const getAllTasks = () => {
     return Task.find();
@@ -26,14 +26,14 @@ const updateLastTask = (id, lastTask) => {
 };
 
 const deleteTask = (id) => {
-    return Task.findByIdAndDelete(id).select(["-password", "-createdAt", "-__v"]);
+    return Task.findByIdAndDelete(id);
 }
 
 module.exports = {
     createTask,
     getTaskById,
     getAllTasks,
-    getTaskByEmail,
+    getTasksForUser,
     updateTask,
     updateLastTask,
     deleteTask,
