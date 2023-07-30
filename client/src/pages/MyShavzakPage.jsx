@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from 'axios';
 
 import UserCard from '../components/UserCard';
+import TaskCard from "../components/TaskCard";
 
 const MyShavzakPage = () => {
     const userPayload = useSelector(store => store.auth.payload);
@@ -29,7 +30,14 @@ const MyShavzakPage = () => {
             <h1 className="text-2xl"><b>Type:</b> {userPayload && userPayload.isManger ? "manager" : "user"}</h1>
             <h1 className="text-2xl"><b>Group ID:</b> {userPayload && userPayload.groupId}</h1>
             {user && (<UserCard user={user} hover={false} />)}
-            {tasks && JSON.stringify(tasks)}
+            {tasks &&
+                tasks
+                    .sort(
+                        (a, b) =>
+                            new Date(b.rangeTime[0]).getTime() -
+                            new Date(a.rangeTime[0]).getTime()
+                    )
+                    .map((task) => <TaskCard task={task} key={task._id} />)}
         </div>
     )
 }
