@@ -23,6 +23,28 @@ const MyShavzakPage = () => {
         } catch (err) {
             console.log("error when fetching user: ", err);
         }
+    };
+
+    const now = new Date().toISOString();
+    let currentTask = null;
+    let futureTasks = [];
+    let pastTasks = [];
+
+    if (tasks) {
+        // Find currently happening task
+        currentTask = tasks.find(task =>
+            now >= task.rangeTime[0] && now <= task.rangeTime[1]
+        );
+
+        // Filter future tasks and sort them in ascending chronological order
+        futureTasks = tasks
+            .filter(task => now < task.rangeTime[0])
+            .sort((a, b) => new Date(a.rangeTime[0]).getTime() - new Date(b.rangeTime[0]).getTime());
+
+        // Filter past tasks and sort them in ascending chronological order
+        pastTasks = tasks
+            .filter(task => now > task.rangeTime[1])
+            .sort((a, b) => new Date(a.rangeTime[0]).getTime() - new Date(b.rangeTime[0]).getTime());
     }
     return (
         <div className="bg-blue-300 dark:bg-blue-900 p-4 mt-8 max-w-xs sm:max-w-sm md:max-w-3xl rounded-xl">
@@ -36,14 +58,9 @@ const MyShavzakPage = () => {
                     {user && (<UserCard user={user} hover={false} />)}
                 </div>
                 <div className="flex-2">
-                    {tasks &&
-                        tasks
-                            .sort(
-                                (a, b) =>
-                                    new Date(b.rangeTime[0]).getTime() -
-                                    new Date(a.rangeTime[0]).getTime()
-                            )
-                            .map((task) => <TaskCard task={task} key={task._id} />)}
+                    {currentTask && <TaskCard task={currentTask} key={currentTask._id} />}
+                    {futureTasks.map((task) => <TaskCard task={task} key={task._id} />)}
+                    {pastTasks.map((task) => <TaskCard task={task} key={task._id} />)}
                 </div>
             </div>
         </div>
