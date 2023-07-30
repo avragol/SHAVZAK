@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import toast from 'react-hot-toast';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -22,10 +22,12 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
+    const navigate = useNavigate();
 
     const handleLogoutClick = () => {
         localStorage.removeItem("userToken");
         dispatch(authActions.logOut())
+        navigate(ROUTES.HOME);
         toast.success(`Goodbye! see you soon..`);
     }
 
