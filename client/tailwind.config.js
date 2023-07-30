@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'bounce-slow': ' bounce 1.5s infinite',
+      },
       colors: {
         bgcColor: "#F2F2F2",
         mainCustomColor: "#2F80ED",

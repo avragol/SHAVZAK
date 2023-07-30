@@ -25,19 +25,27 @@ const MyShavzakPage = () => {
         }
     }
     return (
-        <div className="bg-blue-300 p-4 mt-4 rounded-xl">
-            <h1 className="text-2xl"><b>User ID:</b> {userPayload && userPayload._id}</h1>
-            <h1 className="text-2xl"><b>Type:</b> {userPayload && userPayload.isManger ? "manager" : "user"}</h1>
-            <h1 className="text-2xl"><b>Group ID:</b> {userPayload && userPayload.groupId}</h1>
-            {user && (<UserCard user={user} hover={false} />)}
-            {tasks &&
-                tasks
-                    .sort(
-                        (a, b) =>
-                            new Date(b.rangeTime[0]).getTime() -
-                            new Date(a.rangeTime[0]).getTime()
-                    )
-                    .map((task) => <TaskCard task={task} key={task._id} />)}
+        <div className="bg-blue-300 dark:bg-blue-900 p-4 mt-8 max-w-xs sm:max-w-sm md:max-w-3xl rounded-xl">
+            <div className="flex justify-start md:justify-between mb-2">
+                <h3 className="hidden md:block text-md"><b>User ID:</b> {userPayload && userPayload._id}</h3>
+                <h3 className="text-md"><b>type:</b> {userPayload && userPayload.isManger ? "manager" : "user"}</h3>
+            </div>
+            <div class="border-t border-textColor dark:border-dark-text my-2 mx-[-1rem]"></div>
+            <div className="md:flex gap-5">
+                <div className="flex-1 mt-5">
+                    {user && (<UserCard user={user} hover={false} />)}
+                </div>
+                <div className="flex-2">
+                    {tasks &&
+                        tasks
+                            .sort(
+                                (a, b) =>
+                                    new Date(b.rangeTime[0]).getTime() -
+                                    new Date(a.rangeTime[0]).getTime()
+                            )
+                            .map((task) => <TaskCard task={task} key={task._id} />)}
+                </div>
+            </div>
         </div>
     )
 }
