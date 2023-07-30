@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from 'axios';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+
 
 import UserCard from '../components/UserCard';
 import TaskCard from "../components/TaskCard";
+
 
 const MyShavzakPage = () => {
     const userPayload = useSelector(store => store.auth.payload);
     const [user, setUser] = useState(null);
     const [tasks, setTasks] = useState(null);
+    const [showCalander, setShowCalander] = useState(false);
+    const [showCalanderDilay, setShowCalanderDilay] = useState(false);
     useEffect(() => { fetchData(userPayload._id) }, [userPayload]);
 
     const fetchData = async (id) => {
@@ -46,13 +55,46 @@ const MyShavzakPage = () => {
             .filter(task => now > task.rangeTime[1])
             .sort((a, b) => new Date(a.rangeTime[0]).getTime() - new Date(b.rangeTime[0]).getTime());
     }
+
+    const handleCalanderButton = () => {
+        setShowCalander((prevState) => !prevState);
+        setTimeout(() => setShowCalanderDilay(prevState => !prevState), 200)
+    }
+
     return (
         <div className="bg-blue-300 dark:bg-blue-900 p-4 mt-8 max-w-xs sm:max-w-sm md:max-w-3xl rounded-xl">
+
             <div className="flex justify-start md:justify-between mb-2">
                 <h3 className="hidden md:block text-md"><b>User ID:</b> {userPayload && userPayload._id}</h3>
                 <h3 className="text-md"><b>type:</b> {userPayload && userPayload.isManger ? "manager" : "user"}</h3>
             </div>
             <div class="border-t border-textColor dark:border-dark-text my-2 mx-[-1rem]"></div>
+            <div className="hidden md:block">
+                <div className={`${showCalander ? "h-min scale-y-100" : "scale-y-0"} ${showCalanderDilay ? "" : "h-0"} transition-all decoration-200 overflow-hidden`}>{tasks &&
+                    <FullCalendar
+                        headerToolbar={{
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        }}
+                        plugins={[dayGridPlugin, timeGridPlugin]}
+                        events={tasks.map(task => ({
+                            title: task.name,
+                            start: task.rangeTime[0],
+                            end: task.rangeTime[1],
+                            textColor: "#F8FAFC",
+                            backgroundColor: "#2F80ED",
+                        }))}
+                    />}
+                </div>
+                <button
+                    onClick={handleCalanderButton}
+                    className="flex items-center justify-center w-full py-2 mt-4 bg-mainCustomColor dark:bg-accentColor text-white rounded-lg opacity-70 hover:opacity-90 transition-opacity duration-200"
+                >
+                    <FontAwesomeIcon icon={faCalendar} className="mr-2" />
+                    {showCalander ? "Hide Calander" : "Show Calander"}
+                </button>
+            </div>
             <div className="md:flex gap-5">
                 <div className="flex-1 mt-5">
                     {user && (<UserCard user={user} hover={false} />)}
