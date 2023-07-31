@@ -6,6 +6,7 @@ const ROUTES = {
     LOGIN: "/login",
     USERS: "/users",
     MYSHVZAK: "/my-shavzak",
+    DASHBOARD: "/dashboard",
 }
 
 export default ROUTES;
