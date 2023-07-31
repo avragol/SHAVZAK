@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from 'axios';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 
 import UserCard from '../components/UserCard';
 import TaskCard from "../components/TaskCard";
+import Calender from '../components/Calender';
 
 
 const MyShavzakPage = () => {
@@ -70,22 +69,8 @@ const MyShavzakPage = () => {
             </div>
             <div class="border-t border-textColor dark:border-dark-text my-2 mx-[-1rem]"></div>
             <div className="hidden md:block">
-                <div className={`${showCalander ? "h-min scale-y-100" : "scale-y-0"} ${showCalanderDilay ? "" : "h-0"} transition-all decoration-200 overflow-hidden`}>{tasks &&
-                    <FullCalendar
-                        headerToolbar={{
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                        }}
-                        plugins={[dayGridPlugin, timeGridPlugin]}
-                        events={tasks.map(task => ({
-                            title: task.name,
-                            start: task.rangeTime[0],
-                            end: task.rangeTime[1],
-                            textColor: "#F8FAFC",
-                            backgroundColor: "#2F80ED",
-                        }))}
-                    />}
+                <div className={`${showCalander ? "h-min scale-y-100" : "scale-y-0"} ${showCalanderDilay ? "" : "h-0"} transition-all decoration-200 overflow-hidden`}>
+                    <Calender tasks={tasks} />
                 </div>
                 <button
                     onClick={handleCalanderButton}
