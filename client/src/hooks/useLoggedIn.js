@@ -10,6 +10,7 @@ const useLoggedIn = () => {
             return;
         }
         const payload = jwt_decode(token);
+        console.log(payload);
         dispatch(authActions.login(payload))
     }
 }

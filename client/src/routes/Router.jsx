@@ -7,11 +7,12 @@ import RegistrationPage from "../pages/RegistrationPage";
 import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import MyShavzakPage from "../pages/MyShavzakPage";
-import DashboardPage from '../pages/DashboardPage';
+import DashboardPage from '../pages/dashbord/DashboardPage';
 import LoggedProtectedRoute from "./protectedRoutes/LoggedProtectedRoute";
 import PayloadProtectedRoute from './protectedRoutes/PayloadProtectedRoute';
 
 const Router = () => {
+
     return (
         <Routes>
             {/* pages for all */}
@@ -26,7 +27,7 @@ const Router = () => {
                 element={<MyShavzakPage />} />} />
             {/* pages for managers */}
             <Route path={ROUTES.DASHBOARD} element={<PayloadProtectedRoute
-                element={<DashboardPage />} />} />
+                element={<DashboardPage />} isManager={true} />} />
             {/* 404 page */}
             <Route path="*" element={<span><h1>404</h1><p>Opsss... page not found</p></span>} />
         </Routes>

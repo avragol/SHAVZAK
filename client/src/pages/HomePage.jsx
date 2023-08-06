@@ -1,6 +1,12 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 const HomePage = () => {
+
+    const auth = useSelector(store => store.auth);
+
+    useEffect(() => { console.log(auth); }, [auth]);
 
     return (
         <div className="text-center w-11/12 mx-auto">

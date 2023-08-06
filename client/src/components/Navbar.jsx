@@ -16,12 +16,13 @@ const navigation = [
     { label: "Register", url: ROUTES.REGISTER, auth: "all" },
     { label: "Users", url: ROUTES.USERS, auth: "all" },
     { label: "My-Shavzak", url: ROUTES.MYSHVZAK, auth: "user" },
+    { label: "Dashboard", url: ROUTES.DASHBOARD, auth: "maneger" },
 ]
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
+    const auth = useSelector(store => store.auth);
     const navigate = useNavigate();
 
     const handleLogoutClick = () => {
@@ -55,16 +56,19 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:gap-x-12 ">
-                    {navigation.map((item) => (item.auth === 'all' || (isLoggedIn)) && (
-                        <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
-                            {item.label}
-                        </NavLink>
-                    ))}
+                    {navigation.map((item) =>
+                        ((item.auth === 'all' ||
+                            (auth.payload && ((item.auth === 'user' && auth.isLoggedIn) ||
+                                (item.auth === 'maneger' && auth.payload.isManger))))) && (
+                            <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
+                                {item.label}
+                            </NavLink>
+                        ))}
                 </div>
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-2">
                     <DarkModeToggleComp />
-                    {isLoggedIn ?
+                    {auth.isLoggedIn ?
                         <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text cursor-pointer" onClick={handleLogoutClick}>
                             Log out <span aria-hidden="true">&rarr;</span></div>
                         : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
@@ -111,13 +115,13 @@ const Navbar = () => {
                             <div className="mt-6 flow-root">
                                 <div className="-my-6 divide-y divide-gray-500/10">
                                     <div className="space-y-2 py-6 flex flex-col">
-                                        {navigation.map((item) => (item.auth === 'all' || (isLoggedIn)) && (
+                                        {navigation.map((item) => (item.auth === 'all' || (auth.isLoggedIn)) && (
                                             <NavLink key={item.label} to={item.url} className="text-sm font-semibold leading-6 text-gray-900 dark:text-dark-text ">
                                                 {item.label}
                                             </NavLink>
                                         ))}
                                         <DarkModeToggleComp />
-                                        {isLoggedIn ?
+                                        {auth.isLoggedIn ?
                                             <div className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text" onClick={handleLogoutClick}>
                                                 Log out <span aria-hidden="true">&rarr;</span></div>
                                             : <NavLink to={ROUTES.LOGIN} className="text-sm text-end font-semibold leading-6 text-gray-900 dark:text-dark-text">
