@@ -46,7 +46,7 @@ const App = () => {
         }
       />
       <header><Navbar /></header>
-      <main className='max-w-screen-lg mx-auto'><Router /></main>
+      <main className='max-w-screen-lg mx-auto md:min-w-[600px]'><Router /></main>
       <Footer />
     </div>
   );

@@ -18,6 +18,13 @@ const getTasksForUser = (userId) => {
             return tasksServiceMongo.getTasksForUser(userId);
     }
 };
+const getTasksByGroup = (groupId) => {
+    switch (dbOption) {
+        case "mongo":
+        default:
+            return tasksServiceMongo.getTasksByGroup(groupId);
+    }
+};
 const getTaskById = (id) => {
     switch (dbOption) {
         case "mongo":
@@ -61,6 +68,7 @@ const deleteTask = (id) => {
 module.exports = {
     createTask,
     getTasksForUser,
+    getTasksByGroup,
     getTaskById,
     getAllTasks,
     updateTask,

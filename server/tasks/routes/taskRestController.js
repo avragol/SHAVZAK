@@ -57,6 +57,20 @@ router.get('/by-user/:id', async (req, res) => {
     }
 });
 
+router.get('/by-group/:id', async (req, res) => {
+    try {
+        await taskValidationService.taskIdValidation(req.params.id);
+        const dataFromDB = await taskAccessData.getTasksByGroup(req.params.id);
+        if (dataFromDB) {
+            res.json(dataFromDB);
+        } else {
+            handleError(res, "Undefind task", 404);
+        }
+    } catch (err) {
+        handleError(res, err.message, 400);
+    }
+});
+
 /* manual change */
 router.put('/:id', async (req, res) => {
     try {

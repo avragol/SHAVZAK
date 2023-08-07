@@ -9,6 +9,10 @@ const getTasksForUser = userId => {
     return Task.find({ members: userId });
 }
 
+const getTasksByGroup = groupId => {
+    return Task.find({ groupId: groupId });
+}
+
 const getAllTasks = () => {
     return Task.find();
 }
@@ -32,6 +36,7 @@ const deleteTask = (id) => {
 module.exports = {
     createTask,
     getTaskById,
+    getTasksByGroup,
     getAllTasks,
     getTasksForUser,
     updateTask,
